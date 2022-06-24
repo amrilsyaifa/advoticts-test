@@ -1,6 +1,10 @@
+@import "src/Reusables/Styles/Variables";
+
 .chart {
   img {
-    width: 24px;
-    height: 24px;
+    width: 21px;
+    height: 21px;
+    background-color: $white;
+    padding: 3px;
   }
 }

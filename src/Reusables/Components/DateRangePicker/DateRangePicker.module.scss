@@ -1,0 +1,152 @@
+@import "src/Reusables/Styles/Variables";
+
+.container {
+  position: relative;
+  :global {
+    .react-datepicker__header {
+      background-color: transparent;
+    }
+    .react-datepicker {
+      border: none;
+    }
+    .react-datepicker__day--selected {
+      background: $green_300 !important;
+      border-radius: 30px;
+    }
+    .react-datepicker__day--in-range {
+      background: $green_300 !important;
+      border-radius: 30px;
+    }
+    .react-datepicker__day--in-selecting-range {
+      background: $green_200 !important;
+      border-radius: 30px;
+    }
+    .react-datepicker__day {
+      color: $gray500;
+    }
+    .react-datepicker__day-name {
+      color: $gray500;
+    }
+  }
+  .custom-input-container {
+    min-width: 200px;
+    height: 48px;
+    background-color: $white 0% 0% no-repeat padding-box;
+    box-shadow: 0px 2px 3px #00000029;
+    border-radius: 2px;
+    box-sizing: border-box;
+    padding: 13px 16px;
+    flex-direction: row;
+    align-items: center;
+    display: flex;
+    font-family: $base_font;
+    background-color: $white;
+    cursor: pointer;
+    .icon-calendar {
+      width: 22px;
+      height: 22px;
+    }
+    .text-period {
+      font-size: 16px !important;
+      color: $gray400;
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+    .text-date {
+      color: $gray600;
+      font-size: 16px !important;
+    }
+    .chevron-icon {
+      color: $gray700;
+      padding-left: 16px;
+      font-size: 20px;
+    }
+  }
+}
+
+.is-hidden {
+  display: none;
+}
+
+.wrapper-card {
+  position: absolute;
+  right: 0;
+  top: 50px;
+  z-index: $zIndex90;
+  .card-menu {
+    position: relative;
+    width: 650px;
+    min-height: 300px;
+    background: $white 0% 0% no-repeat padding-box;
+    box-shadow: 0px 2px 6px #0000000a;
+    border: 0.5px solid #cdcdcd;
+    border-radius: 2px;
+    padding: 15px;
+    .button-close {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      .button-icon {
+        font-size: 24px;
+        color: $gray700;
+      }
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      .row-text {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        .icon-calendar {
+          width: 20px;
+          height: 20px;
+        }
+        .title {
+          color: $gray600;
+          padding-left: 16px;
+          font-weight: bold;
+        }
+      }
+      .row {
+        display: flex;
+        flex-direction: row;
+        .content-list {
+          margin-top: 14px;
+          display: flex;
+          flex-direction: column;
+          .list {
+            font-size: 14px;
+            color: $gray500;
+            border-bottom: 1px $gray500 solid;
+            height: 25px;
+            padding-top: 10px;
+            margin-bottom: 5px;
+            width: 120px;
+            cursor: pointer;
+          }
+          .button-apply {
+            background-color: $green_300;
+            color: $white;
+            width: 120px;
+            margin-top: 16px;
+            border: none;
+            height: 30px;
+            border-radius: 3px;
+            cursor: pointer;
+          }
+        }
+        .divider {
+          margin-left: 20px;
+          margin-right: 20px;
+          height: 305px;
+          width: 1px;
+          background-color: $gray300;
+        }
+      }
+    }
+  }
+}
