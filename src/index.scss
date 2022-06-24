@@ -1,0 +1,8 @@
+@import "src/Reusables/Styles/Variables";
+
+body {
+  margin: 0;
+  font-family: $base_font;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
