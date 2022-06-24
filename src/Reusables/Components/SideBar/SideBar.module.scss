@@ -1,0 +1,45 @@
+@import "src/Reusables/Styles/Variables";
+
+.container {
+  width: 72px;
+  height: calc(100vh - 65px);
+  background: $white 0% 0% no-repeat padding-box;
+  border: 0.5px solid $light;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  position: fixed;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: $zIndex90;
+  button {
+    height: 35px;
+    margin-bottom: 20px;
+    margin-top: 12px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    .menu-icon {
+      font-size: 32px;
+      color: $gray300;
+    }
+  }
+}
+
+.sidebar-list {
+  width: 70px;
+  padding: 13px 0px 13px 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 3px;
+  :nth-child(1) {
+    cursor: pointer;
+  }
+}
+
+.sidebar-active {
+  background: $gray200 0% 0% no-repeat padding-box;
+}
