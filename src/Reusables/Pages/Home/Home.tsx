@@ -3,6 +3,7 @@ import React from "react";
 import DateRangePicker from "src/Reusables/Components/DateRangePicker";
 import InfoBar from "src/Reusables/Components/InfoBar";
 import ListProduct from "src/Reusables/Components/ListProduct";
+import ChartHome from "./components/ChartHome/Chart.Home";
 import HomeCard from "./components/HomeCard/Home.Card";
 import Styles from "./Home.module.scss";
 
@@ -19,7 +20,7 @@ const Home = () => {
       <HomeCard />
       <div className={Styles["wrap-list"]}>
         <div className={Styles["chart"]}>
-          <div>Chart</div>
+          <ChartHome />
         </div>
         <div className={Styles["list"]}>
           <ListProduct />
