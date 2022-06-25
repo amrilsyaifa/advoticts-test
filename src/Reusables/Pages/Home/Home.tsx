@@ -7,12 +7,15 @@ import ChartHome from "./components/ChartHome/Chart.Home";
 import HomeCard from "./components/HomeCard/Home.Card";
 import Styles from "./Home.module.scss";
 
-const today = new Date();
-today.setDate(today.getDate() - 7);
+const start = new Date();
+start.setDate(start.getDate() - 7);
+
+const end = new Date();
+end.setDate(end.getDate() - 1);
 
 const Home = () => {
-  const [startDate, setStartDate] = useState<Date>(new Date());
-  const [endDate, setEndDate] = useState<Date>(today);
+  const [startDate, setStartDate] = useState<Date>(start);
+  const [endDate, setEndDate] = useState<Date>(end);
 
   const onChange = (dates: [Date, Date]) => {
     const [start, end] = dates;

@@ -5,6 +5,7 @@ import { IListPeriod, ListPeriod } from "./DateRangePickerConstant";
 import DatePicker from "react-datepicker";
 import UseOnClickOutside from "src/Hooks/useOnClickOutside";
 import { format } from "src/Reusables/Helpers/DateHelper";
+import moment from "moment";
 
 interface IDateRangePicker {
   startDate: Date;
@@ -21,6 +22,11 @@ interface IMenuDatePicker {
   selectedData: IListPeriod | null;
   setSelectedData: (e: IListPeriod) => void;
 }
+
+const minDate = new Date();
+minDate.setMonth(minDate.getMonth() - 6);
+const maxDate = new Date();
+maxDate.setDate(maxDate.getDate() - 1);
 
 const DateRangePicker: React.FC<IDateRangePicker> = ({
   startDate,
@@ -39,6 +45,7 @@ const DateRangePicker: React.FC<IDateRangePicker> = ({
   useEffect(() => {
     setStartDateState(startDate);
     setEndDateState(endDate);
+    findPeriodType(startDate, endDate);
   }, [startDate, endDate]);
 
   useOnClickOutside(ref, () => setIsShow(false));
@@ -47,16 +54,36 @@ const DateRangePicker: React.FC<IDateRangePicker> = ({
     const [start, end] = dates;
     setStartDateState(start);
     setEndDateState(end);
+
+    findPeriodType(start, end);
+  };
+
+  const findPeriodType = (start: Date, end: Date) => {
+    const today = new Date();
+    const valueStart = today.getDate() - start?.getDate();
+    const valueEnd = today.getDate() - end?.getDate();
+    const result = ListPeriod.find(
+      (item: IListPeriod) =>
+        item.value.start === valueStart && item.value.end === valueEnd
+    );
+    setSelectedData(result ? result : ListPeriod[5]);
   };
 
   const onCLose = () => {
     setIsShow(false);
-    setStartDateState(new Date());
-    setEndDateState(new Date());
+    setStartDateState(startDate);
+    setEndDateState(endDate);
   };
 
   const onApply = () => {
-    onChange([startDateState, endDateState]);
+    const todayDate = moment().format("MMMM-DD-YYYY");
+    const selectStartDate = moment(startDateState).format("MMMM-DD-YYYY");
+    const selectEndDate = moment(endDateState).format("MMMM-DD-YYYY");
+    console.log("todayDate ", todayDate);
+    console.log("selectStartDate ", selectStartDate);
+    if (!(todayDate === selectStartDate && todayDate === selectEndDate)) {
+      onChange([startDateState, endDateState]);
+    }
     onCLose();
   };
 
@@ -65,6 +92,17 @@ const DateRangePicker: React.FC<IDateRangePicker> = ({
   };
 
   const onSelectData = (e: IListPeriod) => {
+    const startValue = e.value.start;
+    const endValue = e.value.end;
+
+    const start = new Date();
+    start.setDate(start.getDate() - startValue);
+
+    const end = new Date();
+    end.setDate(end.getDate() - endValue);
+
+    setStartDateState(start);
+    setEndDateState(end);
     setSelectedData(e);
   };
 
@@ -127,17 +165,19 @@ const MenuDatePicker: React.FC<IMenuDatePicker> = ({
           </div>
           <div className={Styles["row"]}>
             <div className={Styles["content-list"]}>
-              {ListPeriod.map((item: IListPeriod) => (
-                <div
-                  onClick={() => setSelectedData(item)}
-                  key={item.key}
-                  className={`${Styles["list"]} ${
-                    selectedData?.key === item.key && Styles["active"]
-                  }`}
-                >
-                  {item.label}
-                </div>
-              ))}
+              {ListPeriod.map((item: IListPeriod) => {
+                return (
+                  <div
+                    onClick={() => setSelectedData(item)}
+                    key={item.key}
+                    className={`${Styles["list"]} ${
+                      selectedData?.key === item.key && Styles["active"]
+                    }`}
+                  >
+                    {item.label}
+                  </div>
+                );
+              })}
               <button className={Styles["button-apply"]} onClick={onApply}>
                 Apply
               </button>
@@ -151,6 +191,8 @@ const MenuDatePicker: React.FC<IMenuDatePicker> = ({
               selectsRange
               inline
               monthsShown={2}
+              minDate={minDate}
+              maxDate={maxDate}
             />
           </div>
         </div>
@@ -160,3 +202,6 @@ const MenuDatePicker: React.FC<IMenuDatePicker> = ({
 };
 
 export default DateRangePicker;
+
+// react-datepicker__day react-datepicker__day--030
+// react-datepicker__day react-datepicker__day--010 react-datepicker__day--disabled

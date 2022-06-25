@@ -22,10 +22,14 @@
       border-radius: 30px;
     }
     .react-datepicker__day {
-      color: $gray500;
+      color: $gray600;
     }
     .react-datepicker__day-name {
-      color: $gray500;
+      color: $gray600;
+    }
+    .react-datepicker__day--disabled {
+      color: $gray300;
+      cursor: not-allowed;
     }
   }
   .custom-input-container {
