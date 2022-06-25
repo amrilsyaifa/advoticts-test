@@ -40,7 +40,7 @@ const DateRangePicker = () => {
   };
 
   const onOpen = () => {
-    setIsShow(true);
+    setIsShow(!isShow);
   };
 
   return (
