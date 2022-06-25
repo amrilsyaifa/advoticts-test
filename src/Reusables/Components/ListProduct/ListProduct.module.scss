@@ -1,0 +1,101 @@
+@import "src/Reusables/Styles/Variables";
+
+.container {
+  width: 275px;
+  height: 424px;
+  .body {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    .title {
+      font-family: $secondary_font;
+      font-size: 20px;
+      color: $gray_dark;
+      margin-bottom: 16px;
+    }
+    .header {
+      width: 243px;
+      height: 80px;
+      background: $yellow_smoth 0% 0% no-repeat padding-box;
+      border-radius: 4px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 8px;
+      img {
+        width: 80px;
+        height: 80px;
+        margin-right: 8px;
+      }
+      .col {
+        height: 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .title {
+          font-family: $secondary_font;
+          margin-top: 14px;
+          font-size: 20px;
+          color: $dark900;
+        }
+        .row {
+          font-family: $secondary_font;
+          font-size: 14px;
+          color: $dark500;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          width: 140px;
+          margin-bottom: 14px;
+        }
+      }
+    }
+    .body {
+      margin-bottom: 8px;
+      width: 243px;
+      height: 60px;
+      border-radius: 4px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      border: 0.5px solid $dark100;
+      img {
+        width: 60px;
+        height: 60px;
+        margin-right: 8px;
+      }
+      .col {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        box-sizing: border-box;
+        .title {
+          font-family: $secondary_font;
+          font-size: 16px;
+          color: $dark900;
+        }
+        .row {
+          font-family: $secondary_font;
+          font-size: 14px;
+          color: $dark500;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          width: 140px;
+        }
+      }
+    }
+    .icon-elipsis {
+      position: absolute;
+      right: 0;
+      top: 0;
+      cursor: pointer;
+      img {
+        width: 12px;
+        height: 24px;
+      }
+    }
+  }
+}

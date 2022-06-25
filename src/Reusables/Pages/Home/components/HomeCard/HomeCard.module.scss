@@ -1,0 +1,64 @@
+@import "src/Reusables/Styles/Variables";
+
+.wrap-card {
+  width: 276px;
+  margin-top: 16px;
+  .wrap-body {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    .icon-elipsis {
+      position: absolute;
+      right: 0;
+      top: 0;
+      cursor: pointer;
+      img {
+        width: 12px;
+        height: 24px;
+      }
+    }
+    .title-card {
+      letter-spacing: 0px;
+      color: $dark;
+      font-family: $secondary_font;
+      font-size: 15px;
+      margin-bottom: 16px;
+    }
+    .row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .icon {
+        margin-left: 30px;
+        img {
+          width: 43px;
+          height: 37px;
+        }
+      }
+      .col {
+        display: flex;
+        flex-direction: column;
+        .row {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          font-family: $secondary_font;
+          font-size: 10px;
+          .red {
+            color: red;
+          }
+          .normal {
+            color: #575757;
+            padding-left: 3px;
+          }
+        }
+        .currency {
+          color: $gray_dark;
+          font-family: $secondary_font;
+          font-size: 25px;
+          font-weight: 800;
+        }
+      }
+    }
+  }
+}
