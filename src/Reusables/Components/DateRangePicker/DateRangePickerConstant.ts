@@ -29,14 +29,14 @@ export const ListPeriod: IListPeriod[] = [
   {
     key: 3,
     label: "Last 7 days",
-    value: { from: 1, to: -7 },
+    value: { from: -1, to: -7 },
     isOneMonth: false,
     isCustom: false,
   },
   {
     key: 4,
     label: "Last 30 days",
-    value: { from: 1, to: -30 },
+    value: { from: -1, to: -30 },
     isOneMonth: false,
     isCustom: false,
   },

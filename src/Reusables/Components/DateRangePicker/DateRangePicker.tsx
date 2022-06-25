@@ -1,46 +1,71 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { IoChevronDownOutline, IoCloseOutline } from "react-icons/io5";
 import Styles from "./DateRangePicker.module.scss";
 import { IListPeriod, ListPeriod } from "./DateRangePickerConstant";
 import DatePicker from "react-datepicker";
 import UseOnClickOutside from "src/Hooks/useOnClickOutside";
+import { format } from "src/Reusables/Helpers/DateHelper";
 
+interface IDateRangePicker {
+  startDate: Date;
+  endDate: Date;
+  onChange: (e: [Date, Date]) => void;
+}
 interface IMenuDatePicker {
-  startDate: Date | null;
-  endDate: Date | null;
-  onChange: (e: [Date | null, Date | null]) => void;
+  startDate: Date;
+  endDate: Date;
+  onChange: (e: [Date, Date]) => void;
   onCLose: () => void;
   onApply: () => void;
   isShow: boolean;
+  selectedData: IListPeriod | null;
+  setSelectedData: (e: IListPeriod) => void;
 }
 
-const DateRangePicker = () => {
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
-  const [endDate, setEndDate] = useState<Date | null>(null);
+const DateRangePicker: React.FC<IDateRangePicker> = ({
+  startDate,
+  endDate,
+  onChange,
+}) => {
+  const [startDateState, setStartDateState] = useState<Date>(new Date());
+  const [endDateState, setEndDateState] = useState<Date>(new Date());
   const [isShow, setIsShow] = useState<boolean>(false);
+  const [selectedData, setSelectedData] = useState<IListPeriod | null>(null);
 
   const { useOnClickOutside } = UseOnClickOutside();
 
   const ref = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    setStartDateState(startDate);
+    setEndDateState(endDate);
+  }, [startDate, endDate]);
+
   useOnClickOutside(ref, () => setIsShow(false));
 
-  const onChange = (dates: [Date | null, Date | null]) => {
+  const onChangeState = (dates: [Date, Date]) => {
     const [start, end] = dates;
-    setStartDate(start);
-    setEndDate(end);
+    setStartDateState(start);
+    setEndDateState(end);
   };
 
   const onCLose = () => {
     setIsShow(false);
+    setStartDateState(new Date());
+    setEndDateState(new Date());
   };
 
   const onApply = () => {
+    onChange([startDateState, endDateState]);
     onCLose();
   };
 
   const onOpen = () => {
     setIsShow(!isShow);
+  };
+
+  const onSelectData = (e: IListPeriod) => {
+    setSelectedData(e);
   };
 
   return (
@@ -53,17 +78,21 @@ const DateRangePicker = () => {
         />
         <div className={Styles["text-period"]}>Period</div>
         <div className={Styles["text-date"]}>
-          11 September 2018 - 14 September 2018
+          {format(startDateState, "DD MMMM YYYY")}
+          {" - "}
+          {format(endDateState, "DD MMMM YYYY")}
         </div>
         <IoChevronDownOutline className={Styles["chevron-icon"]} />
       </div>
       <MenuDatePicker
         isShow={isShow}
-        startDate={startDate}
-        endDate={endDate}
-        onChange={onChange}
+        startDate={startDateState}
+        endDate={endDateState}
+        onChange={onChangeState}
         onCLose={onCLose}
         onApply={onApply}
+        selectedData={selectedData}
+        setSelectedData={onSelectData}
       />
     </div>
   );
@@ -76,6 +105,8 @@ const MenuDatePicker: React.FC<IMenuDatePicker> = ({
   isShow,
   onCLose,
   onApply,
+  selectedData,
+  setSelectedData,
 }) => {
   return (
     <div
@@ -97,7 +128,13 @@ const MenuDatePicker: React.FC<IMenuDatePicker> = ({
           <div className={Styles["row"]}>
             <div className={Styles["content-list"]}>
               {ListPeriod.map((item: IListPeriod) => (
-                <div key={item.key} className={Styles["list"]}>
+                <div
+                  onClick={() => setSelectedData(item)}
+                  key={item.key}
+                  className={`${Styles["list"]} ${
+                    selectedData?.key === item.key && Styles["active"]
+                  }`}
+                >
                   {item.label}
                 </div>
               ))}

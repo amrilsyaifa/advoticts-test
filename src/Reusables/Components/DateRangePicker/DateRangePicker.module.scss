@@ -128,6 +128,11 @@
             width: 120px;
             cursor: pointer;
           }
+          .active {
+            background-color: $green_300;
+            color: $white;
+            font-weight: bold;
+          }
           .button-apply {
             background-color: $green_300;
             color: $white;
