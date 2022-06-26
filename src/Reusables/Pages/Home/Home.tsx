@@ -6,7 +6,7 @@ import InfoBar from "src/Reusables/Components/InfoBar";
 import ListProduct from "src/Reusables/Components/ListProduct";
 import { ISKU } from "src/Reusables/Mock/DataDummy/best-selling-sku";
 import { defailtDataSalesTurnOver } from "src/Reusables/Mock/DataDummy/data-sales-turnover";
-import ChartHome, { ISeries } from "./Components/ChartHome/Chart.Home";
+import ChartHome, { ISeries } from "./Components/ChartHome/ChartHome";
 import HomeCard, { IHomeCard } from "./Components/HomeCard/Home.Card";
 import Styles from "./Home.module.scss";
 import useHome from "./Hooks/useHome";
