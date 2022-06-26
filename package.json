@@ -25,6 +25,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "building": "CI='' react-scripts build",
     "eject": "react-scripts eject",
     "test": "react-scripts test",
     "test:ci": "CI=true react-scripts test --passWithNoTests",
