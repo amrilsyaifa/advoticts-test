@@ -2,7 +2,7 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
 import Styles from "./ChartHome.module.scss";
-import Card from "src/Reusables/Components/Card";
+import Card from "../../../../Components/Card";
 
 interface IChartHome {
   series: ISeries[];
