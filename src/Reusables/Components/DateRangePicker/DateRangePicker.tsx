@@ -60,7 +60,7 @@ const DateRangePicker: React.FC<IDateRangePicker> = ({
     }
   }, [startDate, endDate, isDidMount]);
 
-  useOnClickOutside(ref, () => setIsShow(false));
+  useOnClickOutside(ref, () => onCLose());
 
   const onChangeState = (dates: [Date, Date]) => {
     const [start, end] = dates;
