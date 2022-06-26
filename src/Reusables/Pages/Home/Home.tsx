@@ -1,34 +1,55 @@
+import moment from "moment";
 import React, { useState, useEffect } from "react";
 
 import DateRangePicker from "src/Reusables/Components/DateRangePicker";
 import InfoBar from "src/Reusables/Components/InfoBar";
 import ListProduct from "src/Reusables/Components/ListProduct";
 import { ISKU } from "src/Reusables/Mock/DataDummy/best-selling-sku";
-import ChartHome from "./Components/ChartHome/Chart.Home";
+import ChartHome, { ISeries } from "./Components/ChartHome/Chart.Home";
 import HomeCard from "./Components/HomeCard/Home.Card";
 import Styles from "./Home.module.scss";
 import useHome from "./Hooks/useHome";
 
-const start = new Date();
-start.setDate(start.getDate() - 7);
-
-const end = new Date();
-end.setDate(end.getDate() - 1);
+export const formatDate = "YYYY-MM-DD";
 
 const Home = () => {
   const [dataBestSelling, setDataBestSelling] = useState<ISKU[]>([]);
   const [dataTopCompetitor, setDataTopCompetitor] = useState<ISKU[]>([]);
-  const [startDate, setStartDate] = useState<Date>(start);
-  const [endDate, setEndDate] = useState<Date>(end);
+  const [startDate, setStartDate] = useState<Date>(new Date());
+  const [endDate, setEndDate] = useState<Date>(new Date());
+  const [isDidMount, setIsDidMount] = useState<boolean>(false);
+  const [chartData, setChartData] = useState<ISeries[]>([]);
 
-  const { onFetchData } = useHome();
+  const { onFetchDataSKU, onFetchDataChart } = useHome();
 
   useEffect(() => {
-    onFetchingData();
+    if (isDidMount) {
+      onFetchingData();
+    }
   }, [startDate, endDate]);
 
+  useEffect(() => {
+    const today = moment().format(formatDate);
+    const start = new Date(today);
+    start.setDate(start.getDate() - 7);
+
+    const end = new Date(today);
+    end.setDate(end.getDate() - 1);
+    setStartDate(start);
+    setEndDate(end);
+    setIsDidMount(true);
+  }, []);
+
   const onFetchingData = () => {
-    const { bestSelling, topCompetitor } = onFetchData(startDate, endDate);
+    const res = onFetchDataChart(
+      moment(startDate).format(formatDate),
+      moment(endDate).format(formatDate)
+    );
+    setChartData(res);
+    const { bestSelling, topCompetitor } = onFetchDataSKU(
+      moment(startDate).format(formatDate),
+      moment(endDate).format(formatDate)
+    );
     setDataBestSelling(bestSelling);
     setDataTopCompetitor(topCompetitor);
   };
@@ -37,7 +58,6 @@ const Home = () => {
     setStartDate(start);
     setEndDate(end);
   };
-
   return (
     <div className={Styles["container"]}>
       <div className={Styles["header"]}>
@@ -54,7 +74,7 @@ const Home = () => {
       <HomeCard />
       <div className={Styles["wrap-list"]}>
         <div className={Styles["chart"]}>
-          <ChartHome />
+          <ChartHome series={chartData} />
         </div>
         <div className={Styles["list"]}>
           <ListProduct title="Best Selling SKU" data={dataBestSelling} />

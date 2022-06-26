@@ -4,8 +4,9 @@ import Styles from "./DateRangePicker.module.scss";
 import { IListPeriod, ListPeriod } from "./DateRangePickerConstant";
 import DatePicker from "react-datepicker";
 import UseOnClickOutside from "src/Hooks/useOnClickOutside";
-import { format } from "src/Reusables/Helpers/DateHelper";
+import { findPeriodList, format } from "src/Reusables/Helpers/DateHelper";
 import moment from "moment";
+import { formatDate } from "src/Reusables/Pages/Home/Home";
 
 interface IDateRangePicker {
   startDate: Date;
@@ -33,20 +34,31 @@ const DateRangePicker: React.FC<IDateRangePicker> = ({
   endDate,
   onChange,
 }) => {
-  const [startDateState, setStartDateState] = useState<Date>(new Date());
-  const [endDateState, setEndDateState] = useState<Date>(new Date());
+  const [startDateState, setStartDateState] = useState<Date>(startDate);
+  const [endDateState, setEndDateState] = useState<Date>(endDate);
   const [isShow, setIsShow] = useState<boolean>(false);
   const [selectedData, setSelectedData] = useState<IListPeriod | null>(null);
+  const [isDidMount, setIsDidMount] = useState<boolean>(false);
 
   const { useOnClickOutside } = UseOnClickOutside();
 
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setStartDateState(startDate);
-    setEndDateState(endDate);
-    findPeriodType(startDate, endDate);
-  }, [startDate, endDate]);
+    setIsDidMount(true);
+  }, []);
+
+  useEffect(() => {
+    if (isDidMount) {
+      const starting = moment(startDate).format(formatDate);
+      const ending = moment(endDate).format(formatDate);
+      const newDateStart = new Date(starting);
+      const newDateEnd = new Date(ending);
+      setStartDateState(newDateStart);
+      setEndDateState(newDateEnd);
+      findPeriodType(newDateStart, newDateEnd);
+    }
+  }, [startDate, endDate, isDidMount]);
 
   useOnClickOutside(ref, () => setIsShow(false));
 
@@ -59,13 +71,7 @@ const DateRangePicker: React.FC<IDateRangePicker> = ({
   };
 
   const findPeriodType = (start: Date, end: Date) => {
-    const today = new Date();
-    const valueStart = today.getDate() - start?.getDate();
-    const valueEnd = today.getDate() - end?.getDate();
-    const result = ListPeriod.find(
-      (item: IListPeriod) =>
-        item.value.start === valueStart && item.value.end === valueEnd
-    );
+    const result = findPeriodList(start, end);
     setSelectedData(result ? result : ListPeriod[5]);
   };
 
@@ -76,12 +82,21 @@ const DateRangePicker: React.FC<IDateRangePicker> = ({
   };
 
   const onApply = () => {
-    const todayDate = moment().format("MMMM-DD-YYYY");
-    const selectStartDate = moment(startDateState).format("MMMM-DD-YYYY");
-    const selectEndDate = moment(endDateState).format("MMMM-DD-YYYY");
+    const todayDate = moment().format(formatDate);
+    const selectStartDate = moment(startDateState);
+    const selectEndDate = moment(endDateState);
 
-    if (!(todayDate === selectStartDate && todayDate === selectEndDate)) {
-      onChange([startDateState, endDateState]);
+    if (
+      !(
+        todayDate === selectStartDate.format(formatDate) &&
+        todayDate === selectEndDate.format(formatDate)
+      ) &&
+      selectEndDate.isValid()
+    ) {
+      onChange([
+        new Date(selectStartDate.format(formatDate)),
+        new Date(selectEndDate.format(formatDate)),
+      ]);
     }
     onCLose();
   };
@@ -168,9 +183,9 @@ const MenuDatePicker: React.FC<IMenuDatePicker> = ({
                 return (
                   <div
                     onClick={() => setSelectedData(item)}
-                    key={item.key}
+                    key={item.id}
                     className={`${Styles["list"]} ${
-                      selectedData?.key === item.key && Styles["active"]
+                      selectedData?.id === item.id && Styles["active"]
                     }`}
                   >
                     {item.label}

@@ -1,8 +1,12 @@
+import moment from "moment";
+import { formatDate } from "src/Reusables/Pages/Home/Home";
+
 export interface IListPeriod {
-  key: number;
+  id: number;
   label: string;
   value: IValue;
   isCustom: boolean;
+  key: string;
 }
 
 interface IValue {
@@ -10,44 +14,51 @@ interface IValue {
   end: number;
 }
 
-const date = new Date();
+const today = moment().format("YYYY-MM-DD");
+const date = new Date(today);
 date.setDate(date.getDate() - 1);
 
 export const ListPeriod: IListPeriod[] = [
   {
-    key: 1,
+    id: 1,
     label: "Today",
     value: { start: 0, end: 0 },
     isCustom: false,
+    key: "today",
   },
   {
-    key: 2,
+    id: 2,
     label: "Yesterday",
     value: { start: 1, end: 1 },
     isCustom: false,
+    key: "yesterday",
   },
   {
-    key: 3,
+    id: 3,
     label: "Last 7 days",
     value: { start: 7, end: 1 },
     isCustom: false,
+    key: "last7Day",
   },
   {
-    key: 4,
+    id: 4,
     label: "Last 30 days",
     value: { start: 30, end: 1 },
     isCustom: false,
+    key: "last30Day",
   },
   {
-    key: 5,
+    id: 5,
     label: "This Month",
     value: { start: date.getDate(), end: 1 },
     isCustom: false,
+    key: "thisMonth",
   },
   {
-    key: 6,
+    id: 6,
     label: "Custom",
     value: { start: 8, end: 1 },
-    isCustom: false,
+    isCustom: true,
+    key: "custom",
   },
 ];

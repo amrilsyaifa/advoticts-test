@@ -30,7 +30,7 @@ const ListProduct: React.FC<IListProduct> = ({ title, data }) => {
               );
             } else if (index < 7) {
               return (
-                <div className={Styles["body"]}>
+                <div key={item.key} className={Styles["body"]}>
                   <img src={item.url} alt={item.key} />
                   <div className={Styles["col"]}>
                     <div className={Styles["title"]}>{item.name}</div>

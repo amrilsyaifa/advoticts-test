@@ -1,17 +1,25 @@
 import moment from "moment";
+import {
+  IListPeriod,
+  ListPeriod,
+} from "src/Reusables/Components/DateRangePicker/DateRangePickerConstant";
+import { findPeriodList } from "src/Reusables/Helpers/DateHelper";
 import { BestSellingSKU } from "src/Reusables/Mock/DataDummy/best-selling-sku";
+import { ChartDummy } from "src/Reusables/Mock/DataDummy/chart";
 import { TopCompetitorSKU } from "src/Reusables/Mock/DataDummy/top-competitor-sku";
 
 const useHome = () => {
   const dateFormat = "DD-MM-YYYY";
-  const onFetchData = (start, end) => {
-    const starting = start;
+  const onFetchDataSKU = (start, end) => {
+    const starting = new Date(start);
+    const ending = new Date(end);
     starting.setDate(starting.getDate() - 1);
+
     const groupingDataBestSelling = {};
     const groupingDataTopCompetitor = {};
     BestSellingSKU.filter((item) => {
-      const endDate = moment(end, dateFormat);
-      const startDate = moment(start, dateFormat);
+      const endDate = moment(ending, dateFormat);
+      const startDate = moment(starting, dateFormat);
       if (
         endDate.diff(moment(item.date, dateFormat), "days") >= 0 &&
         moment(item.date, dateFormat).diff(startDate, "days") >= 0
@@ -27,8 +35,8 @@ const useHome = () => {
       }
     });
     TopCompetitorSKU.filter((item) => {
-      const endDate = moment(end, dateFormat);
-      const startDate = moment(start, dateFormat);
+      const endDate = moment(ending, dateFormat);
+      const startDate = moment(starting, dateFormat);
       if (
         endDate.diff(moment(item.date, dateFormat), "days") >= 0 &&
         moment(item.date, dateFormat).diff(startDate, "days") >= 0
@@ -71,8 +79,14 @@ const useHome = () => {
     };
   };
 
+  const onFetchDataChart = (start: string, end: string) => {
+    const result = findPeriodList(new Date(start), new Date(end));
+    const response = result ? ChartDummy[result.key] : [];
+    return response;
+  };
   return {
-    onFetchData,
+    onFetchDataSKU,
+    onFetchDataChart,
   };
 };
 
