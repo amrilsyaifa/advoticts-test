@@ -6,6 +6,7 @@ import {
 import { findPeriodList } from "src/Reusables/Helpers/DateHelper";
 import { BestSellingSKU } from "src/Reusables/Mock/DataDummy/best-selling-sku";
 import { ChartDummy } from "src/Reusables/Mock/DataDummy/chart";
+import { DataSalesTurnOver } from "src/Reusables/Mock/DataDummy/data-sales-turnover";
 import { TopCompetitorSKU } from "src/Reusables/Mock/DataDummy/top-competitor-sku";
 
 const useHome = () => {
@@ -81,8 +82,11 @@ const useHome = () => {
 
   const onFetchDataChart = (start: string, end: string) => {
     const result = findPeriodList(new Date(start), new Date(end));
-    const response = result ? ChartDummy[result.key] : [];
-    return response;
+    const responseChart = result ? ChartDummy[result.key] : [];
+    const responseCard = result
+      ? DataSalesTurnOver[result.key]
+      : { price: 0, percentage: 0 };
+    return { chart: responseChart, card: responseCard };
   };
   return {
     onFetchDataSKU,

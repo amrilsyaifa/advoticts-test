@@ -5,8 +5,9 @@ import DateRangePicker from "src/Reusables/Components/DateRangePicker";
 import InfoBar from "src/Reusables/Components/InfoBar";
 import ListProduct from "src/Reusables/Components/ListProduct";
 import { ISKU } from "src/Reusables/Mock/DataDummy/best-selling-sku";
+import { defailtDataSalesTurnOver } from "src/Reusables/Mock/DataDummy/data-sales-turnover";
 import ChartHome, { ISeries } from "./Components/ChartHome/Chart.Home";
-import HomeCard from "./Components/HomeCard/Home.Card";
+import HomeCard, { IHomeCard } from "./Components/HomeCard/Home.Card";
 import Styles from "./Home.module.scss";
 import useHome from "./Hooks/useHome";
 
@@ -19,6 +20,9 @@ const Home = () => {
   const [endDate, setEndDate] = useState<Date>(new Date());
   const [isDidMount, setIsDidMount] = useState<boolean>(false);
   const [chartData, setChartData] = useState<ISeries[]>([]);
+  const [dataCard, setDataCard] = useState<IHomeCard>({
+    ...defailtDataSalesTurnOver,
+  });
 
   const { onFetchDataSKU, onFetchDataChart } = useHome();
 
@@ -41,11 +45,12 @@ const Home = () => {
   }, []);
 
   const onFetchingData = () => {
-    const res = onFetchDataChart(
+    const { chart, card } = onFetchDataChart(
       moment(startDate).format(formatDate),
       moment(endDate).format(formatDate)
     );
-    setChartData(res);
+    setChartData(chart);
+    setDataCard(card);
     const { bestSelling, topCompetitor } = onFetchDataSKU(
       moment(startDate).format(formatDate),
       moment(endDate).format(formatDate)
@@ -71,7 +76,7 @@ const Home = () => {
       <div className={Styles["wrap-info"]}>
         <InfoBar title="MARKET INSIGHTS" />
       </div>
-      <HomeCard />
+      <HomeCard price={dataCard.price} percentage={dataCard.percentage} />
       <div className={Styles["wrap-list"]}>
         <div className={Styles["chart"]}>
           <ChartHome series={chartData} />

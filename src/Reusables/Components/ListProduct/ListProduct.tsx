@@ -1,4 +1,5 @@
 import React from "react";
+import { formatCurrency } from "src/Reusables/Helpers/CurrencyHelper";
 import { ISKU } from "src/Reusables/Mock/DataDummy/best-selling-sku";
 import Card from "../Card";
 import Styles from "./ListProduct.module.scss";
@@ -22,7 +23,7 @@ const ListProduct: React.FC<IListProduct> = ({ title, data }) => {
                   <div className={Styles["col"]}>
                     <div className={Styles["title"]}>{item.name}</div>
                     <div className={Styles["row"]}>
-                      <div>{item.price}</div>
+                      <div>{formatCurrency(item.price)}</div>
                       <div>{item.quantitySell}</div>
                     </div>
                   </div>
@@ -35,8 +36,8 @@ const ListProduct: React.FC<IListProduct> = ({ title, data }) => {
                   <div className={Styles["col"]}>
                     <div className={Styles["title"]}>{item.name}</div>
                     <div className={Styles["row"]}>
-                      <div>{item.price}</div>
-                      <div>{item.quantitySell}</div>
+                      <div>{formatCurrency(item.price)}</div>
+                      <div>{item.quantitySell} item</div>
                     </div>
                   </div>
                 </div>
