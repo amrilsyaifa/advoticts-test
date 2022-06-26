@@ -1,78 +1,50 @@
 import React from "react";
+import { ISKU } from "src/Reusables/Mock/DataDummy/best-selling-sku";
 import Card from "../Card";
 import Styles from "./ListProduct.module.scss";
 
-const ListProduct = () => {
+interface IListProduct {
+  title: string;
+  data: ISKU[];
+}
+
+const ListProduct: React.FC<IListProduct> = ({ title, data }) => {
   return (
     <div className={Styles["container"]}>
       <Card>
         <div className={Styles["body"]}>
-          <div className={Styles["title"]}>ListProduct</div>
-          <div className={Styles["header"]}>
-            <img
-              src="https://ge.all.biz/img/ge/catalog/10213.jpeg"
-              alt="product-header"
-            />
-            <div className={Styles["col"]}>
-              <div className={Styles["title"]}>Nama Product</div>
-              <div className={Styles["row"]}>
-                <div>Rp. xxxxxx</div>
-                <div>80</div>
-              </div>
-            </div>
-          </div>
-          <div className={Styles["body"]}>
-            <img
-              src="https://ge.all.biz/img/ge/catalog/10213.jpeg"
-              alt="product-header"
-            />
-            <div className={Styles["col"]}>
-              <div className={Styles["title"]}>Nama Product</div>
-              <div className={Styles["row"]}>
-                <div>Rp. xxxxxx</div>
-                <div>80</div>
-              </div>
-            </div>
-          </div>
-          <div className={Styles["body"]}>
-            <img
-              src="https://ge.all.biz/img/ge/catalog/10213.jpeg"
-              alt="product-header"
-            />
-            <div className={Styles["col"]}>
-              <div className={Styles["title"]}>Nama Product</div>
-              <div className={Styles["row"]}>
-                <div>Rp. xxxxxx</div>
-                <div>80</div>
-              </div>
-            </div>
-          </div>
-          <div className={Styles["body"]}>
-            <img
-              src="https://ge.all.biz/img/ge/catalog/10213.jpeg"
-              alt="product-header"
-            />
-            <div className={Styles["col"]}>
-              <div className={Styles["title"]}>Nama Product</div>
-              <div className={Styles["row"]}>
-                <div>Rp. xxxxxx</div>
-                <div>80</div>
-              </div>
-            </div>
-          </div>
-          <div className={Styles["body"]}>
-            <img
-              src="https://ge.all.biz/img/ge/catalog/10213.jpeg"
-              alt="product-header"
-            />
-            <div className={Styles["col"]}>
-              <div className={Styles["title"]}>Nama Product</div>
-              <div className={Styles["row"]}>
-                <div>Rp. xxxxxx</div>
-                <div>80</div>
-              </div>
-            </div>
-          </div>
+          <div className={Styles["title"]}>{title}</div>
+          {data?.map((item: ISKU, index) => {
+            if (index === 0) {
+              return (
+                <div key={item.key} className={Styles["header"]}>
+                  <img src={item.url} alt={item.key} />
+                  <div className={Styles["col"]}>
+                    <div className={Styles["title"]}>{item.name}</div>
+                    <div className={Styles["row"]}>
+                      <div>{item.price}</div>
+                      <div>{item.quantitySell}</div>
+                    </div>
+                  </div>
+                </div>
+              );
+            } else if (index < 7) {
+              return (
+                <div className={Styles["body"]}>
+                  <img src={item.url} alt={item.key} />
+                  <div className={Styles["col"]}>
+                    <div className={Styles["title"]}>{item.name}</div>
+                    <div className={Styles["row"]}>
+                      <div>{item.price}</div>
+                      <div>{item.quantitySell}</div>
+                    </div>
+                  </div>
+                </div>
+              );
+            } else {
+              return null;
+            }
+          })}
           <div className={Styles["icon-elipsis"]}>
             <img src="/assets/images/Icon-More-Filled.svg" alt="icon-elipsis" />
           </div>

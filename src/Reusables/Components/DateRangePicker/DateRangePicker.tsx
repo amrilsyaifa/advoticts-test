@@ -79,8 +79,7 @@ const DateRangePicker: React.FC<IDateRangePicker> = ({
     const todayDate = moment().format("MMMM-DD-YYYY");
     const selectStartDate = moment(startDateState).format("MMMM-DD-YYYY");
     const selectEndDate = moment(endDateState).format("MMMM-DD-YYYY");
-    console.log("todayDate ", todayDate);
-    console.log("selectStartDate ", selectStartDate);
+
     if (!(todayDate === selectStartDate && todayDate === selectEndDate)) {
       onChange([startDateState, endDateState]);
     }

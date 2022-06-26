@@ -39,7 +39,7 @@ const ChartHome = () => {
       },
     },
     chart: {
-      height: 410,
+      height: 550,
       type: "line",
       stacked: true,
     },
@@ -63,7 +63,7 @@ const ChartHome = () => {
           options={options}
           series={series}
           type="line"
-          height={410}
+          height={550}
         />
       </div>
     </Card>
