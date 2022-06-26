@@ -15,37 +15,39 @@ const ListProduct: React.FC<IListProduct> = ({ title, data }) => {
       <Card>
         <div className={Styles["body"]}>
           <div className={Styles["title"]}>{title}</div>
-          {data?.map((item: ISKU, index) => {
-            if (index === 0) {
-              return (
-                <div key={item.key} className={Styles["header"]}>
-                  <img src={item.url} alt={item.key} />
-                  <div className={Styles["col"]}>
-                    <div className={Styles["title"]}>{item.name}</div>
-                    <div className={Styles["row"]}>
-                      <div>{formatCurrency(item.price)}</div>
-                      <div>{item.quantitySell}</div>
+          <div data-testid="list">
+            {data?.map((item: ISKU, index) => {
+              if (index === 0) {
+                return (
+                  <div key={item.key} className={`${Styles["header"]} class`}>
+                    <img src={item.url} alt={item.key} />
+                    <div className={Styles["col"]}>
+                      <div className={Styles["title"]}>{item.name}</div>
+                      <div className={Styles["row"]}>
+                        <div>{formatCurrency(item.price)}</div>
+                        <div>{item.quantitySell}</div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            } else if (index < 7) {
-              return (
-                <div key={item.key} className={Styles["body"]}>
-                  <img src={item.url} alt={item.key} />
-                  <div className={Styles["col"]}>
-                    <div className={Styles["title"]}>{item.name}</div>
-                    <div className={Styles["row"]}>
-                      <div>{formatCurrency(item.price)}</div>
-                      <div>{item.quantitySell} item</div>
+                );
+              } else if (index < 7) {
+                return (
+                  <div key={item.key} className={`${Styles["body"]} class`}>
+                    <img src={item.url} alt={item.key} />
+                    <div className={Styles["col"]}>
+                      <div className={Styles["title"]}>{item.name}</div>
+                      <div className={Styles["row"]}>
+                        <div>{formatCurrency(item.price)}</div>
+                        <div>{item.quantitySell} item</div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            } else {
-              return null;
-            }
-          })}
+                );
+              } else {
+                return null;
+              }
+            })}
+          </div>
           <div className={Styles["icon-elipsis"]}>
             <img src="/assets/images/Icon-More-Filled.svg" alt="icon-elipsis" />
           </div>

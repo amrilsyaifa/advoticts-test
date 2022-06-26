@@ -1,8 +1,4 @@
 import moment from "moment";
-import {
-  IListPeriod,
-  ListPeriod,
-} from "src/Reusables/Components/DateRangePicker/DateRangePickerConstant";
 import { findPeriodList } from "src/Reusables/Helpers/DateHelper";
 import { BestSellingSKU } from "src/Reusables/Mock/DataDummy/best-selling-sku";
 import { ChartDummy } from "src/Reusables/Mock/DataDummy/chart";
